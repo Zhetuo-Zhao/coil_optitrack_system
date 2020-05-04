@@ -1,13 +1,14 @@
-function trialTim=trial_timing(tagData,VIEW)
+function trialTime = trial_timing(tagData,VIEW)
     for trialIdx=length(tagData.trialEnds):-1:1
-        trialTim(trialIdx,2)=tagData.trialEnds(trialIdx);
-        trialTim(trialIdx,1)=max(tagData.trialStarts(tagData.trialStarts<tagData.trialEnds(trialIdx)));
-        if( trialIdx < length(tagData.trialEnds) && trialTim(trialIdx,1) == trialTim(trialIdx+1,1) )
-        	trialTim(trialIdx,1) = NaN;
+        trialTime(trialIdx,2)=tagData.trialEnds(trialIdx);
+        trialTime(trialIdx,1)=max(tagData.trialStarts(tagData.trialStarts<tagData.trialEnds(trialIdx)));
+        if( trialIdx < length(tagData.trialEnds) && trialTime(trialIdx,1) == trialTime(trialIdx+1,1) )
+        	trialTime(trialIdx,1) = NaN;
+        end
     end
-    trialTim( isnan(trialTim(:,1)), : ) = [];
+    trialTime( isnan(trialTime(:,1)), : ) = [];
     
     if VIEW
-        figure; plot(trialTim);
+        figure; plot(trialTime);
     end
 end

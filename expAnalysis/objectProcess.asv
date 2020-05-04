@@ -7,13 +7,6 @@ plot_each_frame(helmet,timings.eyeProbe.trial(1), params.opti2roomTransMatrix)
 if length(headRest.marker)==4
     disp(sprintf('[left head coil:%d;  right head coil: %d ]',helmet.coilMarkerL,helmet.coilMarkerR));
 end
-confirmFlag=input('Are the marker corresponding to head coils correct?  Y/N: ','s');
-if strcmp(confirmFlag,'N')
-    headCoilMarker = input('what are the markers? '); 
-    helmet.coilMarkerL=headCoilMarker(1);
-    helmet.coilMarkerR=headCoilMarker(2);
-end
-
 %% headRest
 trialDur=[timings.eyeProbe.trial(1):timings.eyeProbe.trial(2)];
 data2plot{1}=helmet.pos-mean(helmet.pos(:,trialDur),2); data2plot{2}=helmet.q; data2plot{3}=headRest.pos-mean(headRest.pos(:,trialDur),2);
