@@ -58,14 +58,16 @@ end
 trialDur=[timings.eyeProbe.trial(1):timings.eyeProbe.trial(2)];
 data2plot{1}=eyeProbe.pos-mean(eyeProbe.pos(:,trialDur),2); data2plot{2}=vecnorm(eyeProbe.pos-helmet.pos); data2plot{3}=eyeProbe.q;
 taggingPlot([1:size(eyeProbe.pos,2)],data2plot, {'eyeProbe position (m)','distance between eyeProbe and helmet (m)', 'eyeProbe quanternion'}, tagData,[timings.eyeProbe.trial(1)-200 timings.eyeProbe.trial(2)+200]);
-
-for eyeIdx=1:length(params.eyeChannel)
-    startSample_eyeProbeFrame = input('what is the starting sample for eye probe touching the eyelid? '); %228001
-    endSample_eyeProbeFrame = input('what is the ending sample for eye probe touching the eyelid? '); %228241
-    eyeProbe.Frames{eyeIdx}=[startSample_eyeProbeFrame:endSample_eyeProbeFrame]; 
-    eyeProbe = getEyeProbeFromOptiTrack(eyeProbe,eyeProbe.Frames,0.012,eyeProbeMarkers); 
+%%
+confirmFlag=input(sprintf('Is the time interval [%d %d] of eye probe touching eye lid correct?  Y/N: ',227129,228308),'s');
+if strcmp(confirmFlag,'N')
+    for eyeIdx=1:length(params.eyeChannel)
+        startSample_eyeProbeFrame = input('what is the starting sample for eye probe touching the eyelid? '); %228001
+        endSample_eyeProbeFrame = input('what is the ending sample for eye probe touching the eyelid? '); %228241
+        eyeProbe.Frames{eyeIdx}=[startSample_eyeProbeFrame:endSample_eyeProbeFrame]; 
+        eyeProbe = getEyeProbeFromOptiTrack(eyeProbe,eyeProbe.Frames,0.012,eyeProbeMarkers); 
+    end
 end
-
 %% 9-point grid
 plot_each_frame(ninePoints,timings.headFix9pt{1}.trial(1),params.opti2roomTransMatrix)
 ninePtsMarkerIdxs=params.ninePtsMarkers;

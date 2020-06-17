@@ -7,6 +7,13 @@ plot_each_frame(helmet,timings.eyeProbe.trial(1), params.opti2roomTransMatrix)
 if length(headRest.marker)==4
     disp(sprintf('[left head coil:%d;  right head coil: %d ]',helmet.coilMarkerL,helmet.coilMarkerR));
 end
+confirmFlag=input('Are the marker corresponding to head coils correct?  Y/N: ','s');
+if strcmp(confirmFlag,'N')
+    headCoilMarker = input('what are the markers? '); 
+    helmet.coilMarkerL=headCoilMarker(1);
+    helmet.coilMarkerR=headCoilMarker(2);
+end
+
 %% headRest
 trialDur=[timings.eyeProbe.trial(1):timings.eyeProbe.trial(2)];
 data2plot{1}=helmet.pos-mean(helmet.pos(:,trialDur),2); data2plot{2}=helmet.q; data2plot{3}=headRest.pos-mean(headRest.pos(:,trialDur),2);
@@ -14,7 +21,7 @@ taggingPlot(tagData.t_sync,data2plot, {'helmet position (m)','helmet rotation', 
            [timings.eyeProbe.trial(1)-200 timings.eyeProbe.trial(2)+200]);
 startSample_headRestFrame=timings.eyeProbe.trial(1);
 endSample_headRestFrame=timings.eyeProbe.trial(2);
-confirmFlag=input(sprintf('Is the time interval [%d %d] correct?  Y/N: ',startSample_headRestFrame,endSample_headRestFrame),'s');
+confirmFlag=input(sprintf('Is the time interval [%d %d] correct?  Y/N: ',startSample_headRestFrame,endSample_headRestFrame));
 if strcmp(confirmFlag,'N')
     taggingPlot(tagData.t_sync,data2plot, {'helmet position (m)','helmet rotation', 'headRest position (m)'},tagData);
     startSample_headRestFrame = input('what is the starting sample of head rest ON? '); %211293
@@ -52,13 +59,17 @@ trialDur=[timings.eyeProbe.trial(1):timings.eyeProbe.trial(2)];
 data2plot{1}=eyeProbe.pos-mean(eyeProbe.pos(:,trialDur),2); data2plot{2}=vecnorm(eyeProbe.pos-helmet.pos); data2plot{3}=eyeProbe.q;
 taggingPlot([1:size(eyeProbe.pos,2)],data2plot, {'eyeProbe position (m)','distance between eyeProbe and helmet (m)', 'eyeProbe quanternion'}, tagData,[timings.eyeProbe.trial(1)-200 timings.eyeProbe.trial(2)+200]);
 
-for eyeIdx=1:length(params.eyeChannel)
-    startSample_eyeProbeFrame = input('what is the starting sample for eye probe touching the eyelid? '); %228001
-    endSample_eyeProbeFrame = input('what is the ending sample for eye probe touching the eyelid? '); %228241
-    eyeProbe.Frames{eyeIdx}=[startSample_eyeProbeFrame:endSample_eyeProbeFrame]; 
-    eyeProbe = getEyeProbeFromOptiTrack(eyeProbe,eyeProbe.Frames,0.012,eyeProbeMarkers); 
-end
+confirmFlag=input('Is the order of markers correct (the end of the probe should be the last one)?  Y/N: ','s');
+if strcmp(confirmFlag,'N')
+    eyeProbeMarkers = input('what are the eye probe indexes? (the end of the probe should be the last one) '); %[5 4 2 6]
 
+    for eyeIdx=1:length(params.eyeChannel)
+        startSample_eyeProbeFrame = input('what is the starting sample for eye probe touching the eyelid? '); %228001
+        endSample_eyeProbeFrame = input('what is the ending sample for eye probe touching the eyelid? '); %228241
+        eyeProbe.Frames{eyeIdx}=[startSample_eyeProbeFrame:endSample_eyeProbeFrame]; 
+        eyeProbe = getEyeProbeFromOptiTrack(eyeProbe,eyeProbe.Frames,0.012,eyeProbeMarkers); 
+    end
+end
 %% 9-point grid
 plot_each_frame(ninePoints,timings.headFix9pt{1}.trial(1),params.opti2roomTransMatrix)
 ninePtsMarkerIdxs=params.ninePtsMarkers;

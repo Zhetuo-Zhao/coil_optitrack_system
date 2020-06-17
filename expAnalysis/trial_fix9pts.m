@@ -1,9 +1,9 @@
 LOADFILE=1;
 
 if LOADFILE
-    session='05-Feb-2020';
+    session='06-Mar-2020';
     direct=['Z:/fieldCalibrate/data/' session '/'];
-    folder='session2';
+    folder='run3';
 
     load([direct folder '\processed_head.mat'])
     load([direct folder '\processed_eye.mat'])
@@ -13,11 +13,11 @@ if LOADFILE
 end
 
 
-fileName='headFree9Pt';
+fileName='headFix9Pt';
 load([direct folder '\eyeCalib9pts.mat']);
 eyeIdx=1;
-trialTim=timings.headFree9pt{1}.trial;
-fixTim=timings.headFree9pt{1}.fix;
+trialTim=timings.headFix9pt{1}.trial;
+% fixTim=timings.headFree9pt{1}.fix;
 tim2=trialTim(2)-200;
 durSync=trialTim(1):tim2;
 dur1k=timeSwitch(tagData.t_1k,tagData.t_sync,trialTim(1)):timeSwitch(tagData.t_1k,tagData.t_sync,tim2);

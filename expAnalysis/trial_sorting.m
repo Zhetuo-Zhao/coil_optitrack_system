@@ -1,5 +1,5 @@
 LOADFILE=1;
-
+addpath('..\tools\');
 if LOADFILE
     session='06-Mar-2020';
     direct=['Z:/fieldCalibrate/data/' session '/'];
@@ -17,10 +17,11 @@ eyeIdx=1;
 R_opti2room=[0 0 -1;-1 0 0 ; 0 1 0];
 trialTim=timings.sorting{1}.trial;
 tim2=trialTim(1)+240*20;
+%tim2=trialTim(2);
 durSync=trialTim(1):tim2;
 dur1k=timeSwitch(tagData.t_1k,tagData.t_sync,trialTim(1)):timeSwitch(tagData.t_1k,tagData.t_sync,tim2);
 
-
+%%
 folders={'high','middle','low'};
 for i=length(folders):-1:1
     load(['Z:\fieldCalibrate\calibration\field\BinCoil\200205\' folders{i} '\estFieldR13_syncDebug']);
@@ -40,6 +41,8 @@ tableCell=Grid9PtsPos2(tableObjs,R_opti2room,durSync, [6 5 7],1);
 gazePosOnPlane=linePlaneInter(eye.pos1K{eyeIdx}(:,dur1k), eye.sightVec_1k{eyeIdx}, tableCell.plane.param);
 gaze2D=pts3to2(gazePosOnPlane, tableCell.plane.xAxis, tableCell.plane.yAxis, tableCell.plane.origin);
 eye.gaze2D=gaze2D;
+
+
 
 %% save video
 Img=imread([direct folder '/report/tableTilted.png']);
