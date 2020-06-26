@@ -1,4 +1,4 @@
-function demo_sorting2_hand2( data,tt,dur, frameIdx,Img,cols)
+function demo_sorting_hand( data,tt,dur, frameIdx,Img,cols)
 
     %% 1D tace
     hAxis.objs = axes( 'position', [0.55, 0.75+0.03, 0.44, 0.18] );

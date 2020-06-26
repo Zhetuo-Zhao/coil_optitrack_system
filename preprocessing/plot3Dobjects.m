@@ -1,6 +1,6 @@
 % connect lines between each two markers
 
-function plot3Dobjects2(objs, t,R) %R: room 2 optitrack
+function plot3Dobjects(objs, t,R) %R: room 2 optitrack
 
     figure; hold on; 
     colors=get(gca,'colororder');

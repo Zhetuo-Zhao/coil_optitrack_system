@@ -1,6 +1,4 @@
-% rely on input onset and offset of each fixation
-
-function NptsOut=nFixExtract3(eye,fixTim,nPts,eyeIdx,VIEW)
+function NptsOut=nFixExtract(eye,fixTim,nPts,eyeIdx,VIEW)
 
 % trialTim: 
 % nPts: {N}(3xN)

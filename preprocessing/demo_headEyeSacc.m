@@ -1,4 +1,4 @@
-function demo_headEyeSacc2( helmet,pts, head, eyes, tagData, R, tt, dur, frameIdx)
+function demo_headEyeSacc( helmet,pts, head, eyes, tagData, R, tt, dur, frameIdx)
 
     %% object panel
     hAxis.objs = axes( 'position', [0.06, 0.06, 0.45, 0.95] );

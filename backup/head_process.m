@@ -6,7 +6,7 @@ function head=head_process(helmet,vc_opti,R,calib_frame,headCoil,tt,coilON)
     %   calib_frame: a vector of frame index of calibration period (head on head rest)
     
     % OUTPUT:
-    %   head.headEuler: 3xT matrix, yaw (Z), pitch (Y), row (Z) angles in
+    %   head.Euler_head: 3xT matrix, yaw (Z), pitch (Y), row (X) angles in
     %                   degree, in head cooridnate.
     %   head.XYZ_room: 1x3 structure with each 3xT matrix: x, y, z axis in
     %                  time, in room cooridnate.

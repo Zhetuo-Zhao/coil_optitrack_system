@@ -11,11 +11,18 @@ function [coilData, tagData] = processCoilData(params)
 % timeLine: time stamp 
 % Fs: sampling frequency
 
+inputPath = [params.inputPath params.date '/'];
+outputPath = [inputPath params.session '/Figures/'];
+
+if ~exist(outputPath)
+    mkdir(outputPath); 
+end
+
 %% load .csv file
 SETTINGS_FILENAME = [params.session '_settings.mat'];
 TAGS_FILENAME = [params.session '_tags.csv'];
 DATA_FILENAME = [params.session '_coil.csv'];
-coil_loader = CoilLoader(params.inputPath,DATA_FILENAME, TAGS_FILENAME, SETTINGS_FILENAME);
+coil_loader = CoilLoader([inputPath params.session '/'],DATA_FILENAME, TAGS_FILENAME, SETTINGS_FILENAME);
 
 tagData.eyeProbe= coil_loader.computeEyeprobeFramesRaw();
 tagData.calib= coil_loader.computeCalibrationFrames();
@@ -120,12 +127,9 @@ coilName={'leftEye','rightEye','helmetSide','helmetBack'};
                 plot(coilData.sig_syncR{ci}(i,:));
                 title([axis3{i} ' readings'])
             end
-            
-            if params.SAVE
-                saveas(gcf,[params.outputPath coilName{ci} '_coil_sync' '.png'])
-                saveas(gcf,[params.outputPath coilName{ci} '_coil_sync'], 'epsc')
-                saveas(gcf,[params.outputPath coilName{ci} '_coil_sync' '.fig'])
-            end
+%             saveas(gcf,[outputPath coilName{ci} '_coil_sync' '.png'])
+%             saveas(gcf,[outputPath coilName{ci} '_coil_sync'], 'epsc')
+%             saveas(gcf,[outputPath coilName{ci} '_coil_sync' '.fig'])
         end
         
         
@@ -138,12 +142,9 @@ coilName={'leftEye','rightEye','helmetSide','helmetBack'};
                 plot(coilData.sig_1kR{ci}(i,:));
                 title([axis3{i} ' readings'])
             end
-            
-            if params.SAVE
-                saveas(gcf,[params.outputPath coilName{ci} '_coil_1k' '.png'])
-                saveas(gcf,[params.outputPath coilName{ci} '_coil_1k'], 'epsc')
-                saveas(gcf,[params.outputPath coilName{ci} '_coil_1k' '.fig'])
-            end
+%             saveas(gcf,[outputPath coilName{ci} '_coil_1k' '.png'])
+%             saveas(gcf,[outputPath coilName{ci} '_coil_1k'], 'epsc')
+%             saveas(gcf,[outputPath coilName{ci} '_coil_1k' '.fig'])
         end
     end
 end

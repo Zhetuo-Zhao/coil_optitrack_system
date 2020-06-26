@@ -1,7 +1,29 @@
-function posCell=Grid9PtsPos2(obj,R_opti2room,tim, oxy,VIEW)
+% build 2D coordinate system based on 3D points on a plane of objects like
+% 9 point grid, table, tableGrid.
 
-    for ptIdx=length(obj{1}.marker):-1:1
-        posCell.pos(:,ptIdx)=R_opti2room*mean(obj{1}.marker{obj{1}.markerIdx(ptIdx)}.pos(:,tim),2);
+% Input: 
+% obj: rigid body involved. obj{1} is the object that the coordinate
+% system will be based on.
+% R_opti2room: rotation matrix for coordinate transformation from optitrack
+% coordinate to room coordinate
+% tim: fixation timings: order must match the order of obj{1}.markers
+% oxy: the index of 3 markers. First one will be the original of the 2D
+% coordinate. First-second vector will be the x axis. First-third vector
+% will indicate the direction of y axis.
+
+% Output: posCell
+% posCell.plane: 2D coordinate system
+% posCell.pts2D: 2D coordinate of all markers of objects.
+
+function posCell=Grid9PtsPos(obj,R_opti2room,tim, oxy,VIEW)
+
+    if length(obj)>1
+        obj0=obj{1};
+    else
+        obj0=obj;
+    end
+    for ptIdx=length(obj0.marker):-1:1
+        posCell.pos(:,ptIdx)=R_opti2room*mean(obj0.marker{obj0.markerIdx(ptIdx)}.pos(:,tim),2);
     end
     [posCell.plane.param,posCell.PosOnPlane]=planeFit(posCell.pos);
     

@@ -1,4 +1,4 @@
-function trialTime = trial_timing(tagData,VIEW)
+function trialTime = trialTiming(tagData,VIEW)
     for trialIdx=length(tagData.trialEnds):-1:1
         trialTime(trialIdx,2)=tagData.trialEnds(trialIdx);
         trialTime(trialIdx,1)=max(tagData.trialStarts(tagData.trialStarts<tagData.trialEnds(trialIdx)));
